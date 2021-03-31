@@ -1,0 +1,131 @@
+{
+  "name": "HEF_env",
+  "n_gpu": 8,
+  "opt_level": "O0",
+  "arch": {
+    "type": "HEFBert",
+    "args": {
+      "init_layers": 0,
+      "emb_dim": 768,
+      "const_positional_emb": true,
+      "abs_level": true,
+      "rel_level": true,
+      "share_level_emb": true,
+      "dim_feedforward": 1024,
+      "lower_nhead": 8,
+      "lower_drop": 0.1,
+      "lower_layers": 6,
+      "higher_nhead": 6,
+      "higher_drop": 0.1,
+      "higher_layers": 3,
+      "dropout": 0.1,
+      "pathfinder_hidden": 300,
+      "stopper_hidden": 300,
+      "root_forward": 0.06,
+      "leaf_backward": 0.06
+    }
+  },
+  "dataset": {
+    "type": "TaxonomyDataset",
+    "args": {
+      "name": "semeval_2016_task13_env",
+      "data_dir": "data/semeval_2016_task13_env",
+      "embed": "bert",
+      "existing_partition": false,
+      "prune_to_tree": true,
+      "max_length": 64
+    }
+  },
+  "train_data_loader": {
+    "type": "TreeMatchingDataLoader",
+    "args": {
+      "mode": "train",
+      "node_batch_size": 8,
+      "exact_total_size": true,
+      "tree_batch_size": 32,
+      "pos_current_num": 1,
+      "pos_backward_num": 8,
+      "pos_forward_num": 6,
+      "min_neg_num": 16,
+      "expand_factor": 3,
+      "neg_path": "backward",
+      "cross": true,
+      "top_k_similarity": true,
+      "shuffle": true,
+      "abl_use_egonet": false,
+      "abl_name_only": false,
+      "num_workers": 0
+    }
+  },
+  "validation_data_loader": {
+    "type": "TreeMatchingDataLoader",
+    "args": {
+      "mode": "val_full",
+      "node_batch_size": 4096,
+      "expand_factor": 3,
+      "cross": true,
+      "top_k_similarity": true,
+      "abl_use_egonet": false,
+      "abl_name_only": false,
+      "shuffle": false,
+      "num_workers": 0
+    }
+  },
+  "test_data_loader": {
+    "type": "TreeMatchingDataLoader",
+    "args": {
+      "mode": "test_full",
+      "node_batch_size": 1024,
+      "expand_factor": 3,
+      "cross": true,
+      "top_k_similarity": true,
+      "abl_use_egonet": false,
+      "abl_name_only": false,
+      "shuffle": false,
+      "num_workers": 0
+    }
+  },
+  "optimizer": {
+    "type": "AdamW",
+    "weight_decay": 1e-4,
+    "decay_rate": 0.9,
+    "eps": 1e-6,
+    "args": {
+      "lr": 5e-5
+    }
+  },
+  "loss": {
+    "pathfinder_loss": "bce_loss",
+    "stopper_loss": "ce_loss",
+    "eta": 0.9
+  },
+  "metrics": [
+    "micro_mr",
+    "hit_at_1",
+    "hit_at_3",
+    "hit_at_5",
+    "mrr",
+    "mrr_scaled_10",
+    "wu_palmer"
+  ],
+  "lr_scheduler": {
+    "from": "transformers",
+    "type": "get_linear_schedule_with_warmup",
+    "args": {
+      "num_warmup_steps": 45,
+      "num_training_steps": 450
+    }
+  },
+  "trainer": {
+    "epochs": 120,
+    "save_dir": "saved/",
+    "save_period": 5,
+    "verbosity": 2,
+    "monitor": "max val_mrr",
+    "grad_clip": 1,
+    "accumulation_steps": 4,
+    "val_freq": 1,
+    "abl_current_only": false,
+    "tensorboardX": true
+  }
+}

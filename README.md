@@ -16,7 +16,7 @@ The model was developed and tested with `torch==1.4.0` and `networkx==2.4`. For 
 
 ### Datasets used in the paper 
 
-For dataset used in our paper, you can directly download all input files below and skip this section. For dataset file named `<TAXONOMY_NAME>.bert.pickle.bin`, create a folder in `./data/` named `<TAXONOMY_NAME>`  and put this file into the created folder.
+For datasets used in our paper, you can directly download all input files below and skip this section. For dataset file named `<TAXONOMY_NAME>.bert.pickle.bin`, create a folder in `./data/` named `<TAXONOMY_NAME>`  and put this file into the created folder.
 
 * SemEval16-Env: https://t.ly/ZVlY
 * SemEval16-Sci: https://t.ly/B0QT
@@ -45,11 +45,11 @@ parent_taxon2_id \t child_taxon2_id
 parent_taxon3_id \t child_taxon3_id
 ...
 ```
-Notes: Make sure the `<TAXONOMY_NAME>` is the same in the 2 files and the dataset folder name.
+Notes: Make sure the `<TAXONOMY_NAME>` is the same in the 2 files, and the dataset folder name.
 
 #### Step 2 (Optional): Generate train/validation/test partition files
 
-You can generate your desired train/validation/test parition files by creating another 3 separated files (named `<TAXONOMY_NAME>.terms.train`, `<TAXONOMY_NAME>.terms.validation`, and `<TAXONOMY_NAME>.terms.test`) and puting them in the same directory as the above two required files.
+You can generate your desired train/validation/test partition files by creating another 3 separated files (named `<TAXONOMY_NAME>.terms.train`, `<TAXONOMY_NAME>.terms.validation`, and `<TAXONOMY_NAME>.terms.test`) and puting them in the same directory as the above two required files.
 
 These three partition files are of the same format -- each line includes one `taxon_id` that appears in the above `<TAXONOMY_NAME>.terms` file. Make sure that the validation and test nodes are leaf nodes.
 
@@ -81,9 +81,9 @@ CUDA_VISIBLE_DEVICES=0,1 python -m torch.distributed.launch --nproc_per_node=2 t
 
 ### Specifying hyper-parameters
 
-You can change the hyper-parameters in each settings. There are two ways to achieve this.
+You can change the hyper-parameters in each setting. There are two ways to achieve this.
 
-1. Directly modify the config file. All changable hyper-parameters and settings are specified in the config file.
+1. Directly modify the config file. All changeable hyper-parameters and settings are specified in the config file.
 2. Add arguments to the training script. Currently, you can change training epochs, multi-task learning weight $\eta$ and learning rate by adding ``--epochs``, ``-eta`` and ``--lr``, repectively, after the training script. For example:
 
 ````
@@ -126,7 +126,11 @@ Multi-GPU testing/validation and single-GPU testing/validation would generate th
 
 ## Pretrained Models - TO BE RELEASED SOON
 
-Due to the training cost for each model, we release the pretained models for the 3 datasets. These models are the resulting ``model_best.pth`` trained by the default settings in the given config files. Put the downloaded `.saved/` folder in the root path of this repo. 
+Due to the training cost for each model, we release the pretrained models for the 3 datasets. These models are the resulting ``model_best.pth`` trained by the default settings in the given config files. Put the downloaded `.saved/` folder in the root path of this repo. 
+
+* SemEval16-Env: TBR
+* SemEval16-Sci: TBR
+* SemEval16-Food: TBR
 
 The offered pretrained models are trained on 2 GPUs for SemEval16-Env and SemEval16-Sci, and 4 GPUs for SemEval16-Food.
 

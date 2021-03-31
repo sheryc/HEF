@@ -1,6 +1,6 @@
 # The Hierarchy Expansion Framework (HEF)
 
-This repo contains source code of [Enquire One’s Parent and Child Before Decision: Fully Exploit Hierarchical Structure for Self-Supervised Taxonomy Expansion](https://arxiv.org/pdf/2101.11268.pdf), published at The Web Conference 2021.
+This repo contains source code of [Enquire One’s Parent and Child Before Decision: Fully Exploit Hierarchical Structure for Self-Supervised Taxonomy Expansion](https://arxiv.org/pdf/2101.11268.pdf), published in The Web Conference 2021.
 
 ## Installation Guide
 
